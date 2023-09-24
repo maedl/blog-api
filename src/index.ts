@@ -1,6 +1,8 @@
 import express, { Request, Response, response } from 'express';
 import dotenv from 'dotenv';
 import { logTime } from './functions';
+import { mockArticles } from './models/IArticle';
+import { log } from 'console';
 
 dotenv.config();
 
@@ -9,13 +11,21 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript server');
-});
+app.put('/api/articles/:id/like', (req: Request, res: Response) => {
+  const { id } = req.params;
 
-app.post('/', (req: Request, res: Response) => {
-  console.log(req.body);
-  res.send('hello');
+  console.log(id);
+
+  const article = mockArticles.find((article) => article.id === id);
+
+  if (article) {
+    article.likes += 1;
+    res.status(200).json(article.likes);
+  } else {
+    res.send('not found');
+  }
+
+  console.log(mockArticles[0]);
 });
 
 app.listen(port, () => {
