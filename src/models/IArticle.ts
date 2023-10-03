@@ -3,6 +3,13 @@ export interface IArticle {
   title: string;
   description: string;
   content: string[];
+  comments: IComment[];
+  likes: number;
+}
+
+interface IComment {
+  id: string;
+  text: string;
   likes: number;
 }
 
@@ -17,6 +24,10 @@ export const mockArticles: IArticle[] = [
       'Lorem ipsum dolor sit amet.',
     ],
     likes: 0,
+    comments: [
+      { id: '1', text: 'I like this article', likes: 0 },
+      { id: '2', text: 'I like this article', likes: 0 },
+    ],
   },
   {
     id: '2',
@@ -28,6 +39,7 @@ export const mockArticles: IArticle[] = [
       'Lorem ipsum dolor sit amet.',
     ],
     likes: 0,
+    comments: [{ id: '1', text: 'I like this article', likes: 0 }],
   },
   {
     id: '3',
@@ -39,5 +51,6 @@ export const mockArticles: IArticle[] = [
       'Lorem ipsum dolor sit amet.',
     ],
     likes: 0,
+    comments: [{ id: '1', text: 'I like this article', likes: 0 }],
   },
 ];

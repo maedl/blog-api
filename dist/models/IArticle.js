@@ -12,6 +12,10 @@ exports.mockArticles = [
             'Lorem ipsum dolor sit amet.',
         ],
         likes: 0,
+        comments: [
+            { id: '1', text: 'I like this article', likes: 0 },
+            { id: '2', text: 'I like this article', likes: 0 },
+        ],
     },
     {
         id: '2',
@@ -23,6 +27,7 @@ exports.mockArticles = [
             'Lorem ipsum dolor sit amet.',
         ],
         likes: 0,
+        comments: [{ id: '1', text: 'I like this article', likes: 0 }],
     },
     {
         id: '3',
@@ -34,5 +39,6 @@ exports.mockArticles = [
             'Lorem ipsum dolor sit amet.',
         ],
         likes: 0,
+        comments: [{ id: '1', text: 'I like this article', likes: 0 }],
     },
 ];
