@@ -26,13 +26,13 @@ main().catch((err) => console.log(err));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         if (MONGODB_URI === '') {
-            console.log('Database URI is empty, check .env file!');
+            console.log((0, functions_1.srvLogMsg)(), 'Database URI is empty, check .env file!');
         }
         yield mongoose_1.default.connect(MONGODB_URI);
-        console.log('Database connected');
+        console.log((0, functions_1.srvLogMsg)(), 'Database connected');
     });
 }
 app.use('/api/articles', articlesRouter_1.default);
 app.listen(port, () => {
-    console.log(`[server] - ${(0, functions_1.logTime)()}: Server is running at http://localhost:${port}`);
+    console.log(`${(0, functions_1.srvLogMsg)()} Server is running at http://localhost:${port}`);
 });

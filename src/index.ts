@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { logTime } from './functions';
+import { srvLogMsg } from './functions';
 import articlesRouter from './articlesRouter';
 
 dotenv.config();
@@ -16,16 +16,14 @@ main().catch((err) => console.log(err));
 
 async function main() {
   if (MONGODB_URI === '') {
-    console.log('Database URI is empty, check .env file!');
+    console.log(srvLogMsg(), 'Database URI is empty, check .env file!');
   }
   await mongoose.connect(MONGODB_URI);
-  console.log('Database connected');
+  console.log(srvLogMsg(), 'Database connected');
 }
 
 app.use('/api/articles', articlesRouter);
 
 app.listen(port, () => {
-  console.log(
-    `[server] - ${logTime()}: Server is running at http://localhost:${port}`
-  );
+  console.log(`${srvLogMsg()} Server is running at http://localhost:${port}`);
 });

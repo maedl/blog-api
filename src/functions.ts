@@ -1,3 +1,3 @@
-export const logTime = (): string => {
-  return new Date().toLocaleTimeString();
+export const srvLogMsg = (): string => {
+  return `[${new Date().toLocaleTimeString()}] server:`;
 };

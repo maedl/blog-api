@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logTime = void 0;
-const logTime = () => {
-    return new Date().toLocaleTimeString();
+exports.srvLogMsg = void 0;
+const srvLogMsg = () => {
+    return `[${new Date().toLocaleTimeString()}] server:`;
 };
-exports.logTime = logTime;
+exports.srvLogMsg = srvLogMsg;
