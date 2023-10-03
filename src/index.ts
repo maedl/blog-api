@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { logTime } from './functions';
 import { mockArticles } from './models/IArticle';
@@ -9,6 +10,15 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+
+const MONGODB_URI = 'mongodb://127.0.0.1:27017/react-blog';
+
+main().catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(MONGODB_URI);
+  console.log('Database connected');
+}
 
 app.put('/api/articles/:id/like', (req: Request, res: Response) => {
   const { id } = req.params;
