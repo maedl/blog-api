@@ -42,7 +42,7 @@ router.put('/:id/like', (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).send('Error updating likes');
     }
 }));
-router.post('/:id/comments', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/:id/new-comment', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const { comment } = req.body;
     try {
