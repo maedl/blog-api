@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Article, IArticle } from './models/IArticle';
+import { Article } from './models/IArticle';
 
 const router = express.Router();
 
@@ -39,7 +39,7 @@ router.put('/:id/like', async (req: Request, res: Response) => {
 
 router.post('/:id/new-comment', async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { comment } = req.body;
+  const comment = req.body;
 
   try {
     const article = await Article.findById(id);

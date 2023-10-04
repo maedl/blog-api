@@ -44,7 +44,7 @@ router.put('/:id/like', (req, res) => __awaiter(void 0, void 0, void 0, function
 }));
 router.post('/:id/new-comment', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { comment } = req.body;
+    const comment = req.body;
     try {
         const article = yield IArticle_1.Article.findById(id);
         if (!article) {
