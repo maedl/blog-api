@@ -42,17 +42,21 @@ router.put('/:id/like', (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).send('Error updating likes');
     }
 }));
-router.post('/:id/comments', (req, res) => {
+router.post('/:id/comments', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const { comment } = req.body;
-    const article = articles.find((article) => article.id === id);
-    if (article) {
+    try {
+        const article = yield IArticle_1.Article.findById(id);
+        if (!article) {
+            return res.status(404).send('Article not found');
+        }
         article.comments.push(comment);
+        yield article.save();
         res.status(200).json(article.comments);
-        console.log(article.comments);
     }
-    else {
-        res.send('not found');
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding comment');
     }
-});
+}));
 exports.default = router;

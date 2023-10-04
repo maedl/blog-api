@@ -37,18 +37,25 @@ router.put('/:id/like', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/:id/comments', (req: Request, res: Response) => {
+router.post('/:id/comments', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { comment } = req.body;
 
-  const article = articles.find((article: IArticle) => article.id === id);
+  try {
+    const article = await Article.findById(id);
 
-  if (article) {
+    if (!article) {
+      return res.status(404).send('Article not found');
+    }
+
     article.comments.push(comment);
+
+    await article.save();
+
     res.status(200).json(article.comments);
-    console.log(article.comments);
-  } else {
-    res.send('not found');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error adding comment');
   }
 });
 
