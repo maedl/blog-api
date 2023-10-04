@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import { srvLogMsg } from './functions';
 import articlesRouter from './articlesRouter';
@@ -7,9 +8,11 @@ import articlesRouter from './articlesRouter';
 dotenv.config();
 
 const app = express();
+
 const port = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || '';
 
+app.use(cors());
 app.use(express.json());
 
 main().catch((err) => console.log(err));
