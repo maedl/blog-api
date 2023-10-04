@@ -10,7 +10,8 @@ export interface IArticle extends Document {
 
 const commentSchema = new Schema({
   text: { type: String, required: true },
-  likes: { type: Number, required: true },
+  username: { type: String, required: true },
+  likes: { type: Number, default: 0 },
 });
 
 const articleSchema = new Schema({

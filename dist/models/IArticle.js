@@ -27,7 +27,8 @@ exports.Article = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const commentSchema = new mongoose_1.Schema({
     text: { type: String, required: true },
-    likes: { type: Number, required: true },
+    username: { type: String, required: true },
+    likes: { type: Number, default: 0 },
 });
 const articleSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
