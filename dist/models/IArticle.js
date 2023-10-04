@@ -26,7 +26,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Article = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const commentSchema = new mongoose_1.Schema({
-    id: { type: String, required: true },
     text: { type: String, required: true },
     likes: { type: Number, required: true },
 });

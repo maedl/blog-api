@@ -1,15 +1,14 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema, Types } from 'mongoose';
 
 export interface IArticle extends Document {
   title: string;
   description: string;
   content: string[];
-  comments: { id: string; text: string; likes: number }[];
+  comments: { _id: Types.ObjectId; text: string; likes: number }[];
   likes: number;
 }
 
 const commentSchema = new Schema({
-  id: { type: String, required: true },
   text: { type: String, required: true },
   likes: { type: Number, required: true },
 });
