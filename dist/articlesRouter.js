@@ -26,18 +26,22 @@ router.post('/new-article', (req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(500).json({ message: 'Error saving the article', error });
     }
 }));
-router.put('/:id/like', (req, res) => {
+router.put('/:id/like', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const article = articles.find((article) => article.id === id);
-    if (article) {
+    try {
+        const article = yield IArticle_1.Article.findById(id);
+        if (!article) {
+            return res.status(404).send('Article not found');
+        }
         article.likes += 1;
+        yield article.save();
         res.status(200).json(article.likes);
-        console.log(article.comments);
     }
-    else {
-        res.send('not found');
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Error updating likes');
     }
-});
+}));
 router.post('/:id/comments', (req, res) => {
     const { id } = req.params;
     const { comment } = req.body;

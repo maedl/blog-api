@@ -16,17 +16,24 @@ router.post('/new-article', async (req: Request, res: Response) => {
   }
 });
 
-router.put('/:id/like', (req: Request, res: Response) => {
+router.put('/:id/like', async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const article = articles.find((article: IArticle) => article.id === id);
+  try {
+    const article = await Article.findById(id);
 
-  if (article) {
+    if (!article) {
+      return res.status(404).send('Article not found');
+    }
+
     article.likes += 1;
+
+    await article.save();
+
     res.status(200).json(article.likes);
-    console.log(article.comments);
-  } else {
-    res.send('not found');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error updating likes');
   }
 });
 
