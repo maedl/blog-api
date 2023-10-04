@@ -3,6 +3,33 @@ import { Article } from './models/IArticle';
 
 const router = express.Router();
 
+router.get('/summary', async (req: Request, res: Response) => {
+  try {
+    const articles = await Article.find(
+      {},
+      { title: 1, description: 1, id: 1 }
+    );
+    res.status(200).json(articles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching articles');
+  }
+});
+
+router.get('/:id', async (req: Request, res: Response) => {
+  try {
+    const article = await Article.findById(req.params.id);
+    if (article) {
+      res.status(200).json(article);
+    } else {
+      res.status(404).send({ message: 'Article not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Error fetching article' });
+  }
+});
+
 router.post('/new-article', async (req: Request, res: Response) => {
   const articleData = req.body;
 
@@ -23,7 +50,7 @@ router.put('/:id/like', async (req: Request, res: Response) => {
     const article = await Article.findById(id);
 
     if (!article) {
-      return res.status(404).send('Article not found');
+      return res.status(404).send({ message: 'Article not found' });
     }
 
     article.likes += 1;
@@ -33,7 +60,7 @@ router.put('/:id/like', async (req: Request, res: Response) => {
     res.status(200).json(article.likes);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error updating likes');
+    res.status(500).send({ message: 'Error updating likes' });
   }
 });
 
@@ -45,7 +72,7 @@ router.post('/:id/new-comment', async (req: Request, res: Response) => {
     const article = await Article.findById(id);
 
     if (!article) {
-      return res.status(404).send('Article not found');
+      return res.status(404).send({ message: 'Article not found' });
     }
 
     article.comments.push(comment);
@@ -55,7 +82,7 @@ router.post('/:id/new-comment', async (req: Request, res: Response) => {
     res.status(200).json(article.comments);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error adding comment');
+    res.status(500).send({ message: 'Error adding comment' });
   }
 });
 

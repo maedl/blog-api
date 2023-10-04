@@ -15,6 +15,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const IArticle_1 = require("./models/IArticle");
 const router = express_1.default.Router();
+router.get('/summary', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const articles = yield IArticle_1.Article.find({}, { title: 1, description: 1, id: 1 });
+        res.status(200).json(articles);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching articles');
+    }
+}));
+router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const article = yield IArticle_1.Article.findById(req.params.id);
+        if (article) {
+            res.status(200).json(article);
+        }
+        else {
+            res.status(404).send({ message: 'Article not found' });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'Error fetching article' });
+    }
+}));
 router.post('/new-article', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const articleData = req.body;
     const newArticle = new IArticle_1.Article(articleData);
@@ -31,7 +56,7 @@ router.put('/:id/like', (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         const article = yield IArticle_1.Article.findById(id);
         if (!article) {
-            return res.status(404).send('Article not found');
+            return res.status(404).send({ message: 'Article not found' });
         }
         article.likes += 1;
         yield article.save();
@@ -39,7 +64,7 @@ router.put('/:id/like', (req, res) => __awaiter(void 0, void 0, void 0, function
     }
     catch (error) {
         console.error(error);
-        res.status(500).send('Error updating likes');
+        res.status(500).send({ message: 'Error updating likes' });
     }
 }));
 router.post('/:id/new-comment', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -48,7 +73,7 @@ router.post('/:id/new-comment', (req, res) => __awaiter(void 0, void 0, void 0, 
     try {
         const article = yield IArticle_1.Article.findById(id);
         if (!article) {
-            return res.status(404).send('Article not found');
+            return res.status(404).send({ message: 'Article not found' });
         }
         article.comments.push(comment);
         yield article.save();
@@ -56,7 +81,7 @@ router.post('/:id/new-comment', (req, res) => __awaiter(void 0, void 0, void 0, 
     }
     catch (error) {
         console.error(error);
-        res.status(500).send('Error adding comment');
+        res.status(500).send({ message: 'Error adding comment' });
     }
 }));
 exports.default = router;
