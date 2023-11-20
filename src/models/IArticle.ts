@@ -4,13 +4,18 @@ export interface IArticle extends Document {
   title: string;
   description: string;
   content: string[];
-  comments: { _id: Types.ObjectId; text: string; likes: number }[];
+  comments: {
+    _id: Types.ObjectId;
+    author: string;
+    text: string;
+    likes: number;
+  }[];
   likes: number;
 }
 
 const commentSchema = new Schema({
   text: { type: String, required: true },
-  username: { type: String, required: true },
+  author: { type: String, required: true },
   likes: { type: Number, default: 0 },
 });
 
